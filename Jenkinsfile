@@ -1,6 +1,6 @@
 node {
     stage ("Checkout DataService"){
-        git branch: 'main', url: 'https://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@github.com/hannah579/ironmaven_data_service.git'
+        git branch: 'main', url: 'github.com/hannah579/ironmaven_data_service.git'
     }
     
     stage ("Gradle Build - DataService") {
