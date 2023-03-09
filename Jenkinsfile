@@ -38,7 +38,7 @@ node {
 	      sh "kubectl expose deployment data --type=LoadBalancer --port=8081"
 	      sh 'kubectl describe deployment/data'
 	    }
-	  }
+
     }
     
     stage("View Production Deployment"){
