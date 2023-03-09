@@ -32,13 +32,18 @@ node {
 	   parameters: [choice(choices: 'Yes\nNo', 
 	   description: '', name: 'Pass')]
 	
-	  if(response=="Yes") {
-
-	    stage('Release- DataService') {
-		 sh "docker stop api"
-	     sh 'echo MCC DataService is ready to release!'
-
+	    stage('Create and Expose Kubernetes Deployment - DataApi') {
+	      sh "docker stop api"
+	      sh "kubectl create deployment data --image=dataapi:v1.0"
+	      sh "kubectl expose deployment data --type=LoadBalancer --port=8081"
+	      sh 'kubectl describe deployment/data'
 	    }
 	  }
+    }
+    
+    stage("View Production Deployment"){
+    	sh "kubectl get all"
+		sh "kubectl get services"
+		sh "minikube service list"
     }
 }
