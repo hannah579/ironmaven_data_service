@@ -23,7 +23,7 @@ node {
     }
     
     stage ("Run Docker container instance - DataApi"){
-        sh "docker run -d --rm --name api -p 8080:8080 dataapi:v1.0"
+        sh "docker run -d --rm --name dataapi -p 8080:8080 dataapi:v1.0"
      }
     
     stage('User Acceptance Test - DataService') {
@@ -33,7 +33,7 @@ node {
 	   description: '', name: 'Pass')]
 	
 	    stage('Create and Expose Kubernetes Deployment - DataApi') {
-	      sh "docker stop api"
+	      sh "docker stop dataapi"
 	      sh "kubectl create deployment data --image=dataapi:v1.0"
 	      sh "kubectl expose deployment data --type=LoadBalancer --port=8081"
 	      sh 'kubectl describe deployment/data'
@@ -43,7 +43,6 @@ node {
     
     stage("View Production Deployment"){
     	sh "kubectl get all"
-		sh "kubectl get services"
 		sh "minikube service list"
     }
 }
